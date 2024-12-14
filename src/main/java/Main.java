@@ -5,12 +5,15 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean flag = true;
         while(flag){
-        System.out.print("$ ");
-        String input = scanner.nextLine();
+            System.out.print("$ ");
+            String input = scanner.nextLine();
 
-        if(invalidCommand(input)){
-            System.out.println(input + ": command not found");
-        }
+            if (input.contains("exit")){
+                flag = false;
+            } else
+            if(invalidCommand(input)){
+                System.out.println(input + ": command not found");
+            }
         }
     }
 
