@@ -12,5 +12,8 @@ public class Main {
         }
     }
 
+    static boolean invalidCommand(String input){
+        return true;
+    }
 
 }
