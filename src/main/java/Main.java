@@ -22,6 +22,9 @@ public class Main {
                 flag = false;
             } else if(input.contains("echo")) {
                 System.out.println(input.replace("echo ", ""));
+            } else if(inout.contains("pwd")) {
+                String path = System.getProperty("user.dir");
+                System.out.println(path);
             } else
             if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
