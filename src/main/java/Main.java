@@ -1,5 +1,9 @@
 import java.util.Scanner;
 import java.io.File;
+import java.lang.ProcessBuilder;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -19,14 +23,30 @@ public class Main {
             } else if(input.contains("echo")) {
                 System.out.println(input.replace("echo ", ""));
             } else
-            if(invalidCommand(input)){
+            if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
             }
         }
     }
 
-    static boolean invalidCommand(String input){
-        return true;
+    static boolean invalidCommand(String input, String[] paths) throws IOException {
+        boolean found = false;
+        String command = input.split(" ")[0];
+        for(String path : paths){
+            File file = new File(path + "/" + command);
+            if(file.exists()){
+                Process pb = new ProcessBuilder(path + "/" + command, input.replace(command + " ", "")).start();
+                BufferedReader output = new BufferedReader(new InputStreamReader(pb.getInputStream()));
+                String line;
+                while((line = output.readLine()) != null){
+                    System.out.println(line);
+                }
+                output.close();
+                found = true;
+                break;
+            }
+        }
+        return !found;
     }
 
     static void handleCommandType(String input, String[] paths){
