@@ -64,6 +64,9 @@ public class Main {
             case "type":
                 System.out.println("type is a shell builtin");
                 break;
+            case "pwd":
+                System.out.println("pwd is a shell builtin");
+                break;
             default:
                 boolean found = false;
                 for(String path : paths){
