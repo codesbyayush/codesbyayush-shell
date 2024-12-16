@@ -29,7 +29,12 @@ public class Main {
                 System.out.println(currpath);
             } else if(input.contains("cd")) {
                 if(input.charAt(3) == '/'){
-                    currpath = input.replace("cd ", "");
+                    File file = new File(input.replace("cd ", ""));
+                    if(file.exists()){
+                        currpath = file.getAbsolutePath();
+                    } else {
+                        System.out.println(input+ ": No such file or directory");
+                    }
                 } else {
                     // for ../ and ./ cd support;
                     String[] pathArr = currpath.split("/");
