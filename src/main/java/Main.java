@@ -57,7 +57,7 @@ public class Main {
                         String changes = input.replace("cd ", "");
                         StringBuilder newPath = new StringBuilder(changes);
                         boolean fileavailable = true;
-                        while(newPath.charAt(0) == '.'){
+                        while(newPath.length() > 0 && newPath.charAt(0) == '.'){
                             if(pathCount == 0) {
                                 fileavailable = false;
                                 break;
