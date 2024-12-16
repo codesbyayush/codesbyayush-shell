@@ -15,6 +15,7 @@ public class Main {
 
 
         String[] paths = System.getenv("PATH").split(File.pathSeparator);
+        String HOMEDIR = System.getenv("HOME");
         while(flag){
             System.out.print("$ ");
             String input = scanner.nextLine();
@@ -37,7 +38,7 @@ public class Main {
                         System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
                     }
                 } else if (input.charAt(3) == '~') {
-                    currpath = System.getProperty("user.home");
+                    currpath = HOMEDIR;
                 } else if(input.charAt(4) == '/' ) {
                     String absolutePath;
                    if(currpath.charAt(currpath.length() - 1) == '/')
