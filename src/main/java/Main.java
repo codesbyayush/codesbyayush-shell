@@ -4,6 +4,7 @@ import java.lang.ProcessBuilder;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
+import java.nio.file.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -35,18 +36,50 @@ public class Main {
                     } else {
                         System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
                     }
-                } else {
-                    // for ../ and ./ cd support;
-                    String[] pathArr = currpath.split("/");
-                    String[] newPathArr = input.replace("cd ", "").split("../");
-                    String newPath;
-                    int currIndex = pathArr.length;
-                    if(newPathArr.length > 1){
-                        currIndex = currIndex - newPathArr.length - 1;
+                } else if(input.charAt(4) == '/' ) {
+                    String absolutePath;
+                   if(currpath.charAt(currpath.length() - 1) == '/')
+                       absolutePath = currpath;
+                    else {
+                        absolutePath = currpath + "/";
                     }
+                    absolutePath = absolutePath + input.replace("cd ./", "");
+                    File file = new File(absolutePath);
+                    if(file.exists()){
+                        currpath = file.getAbsolutePath();
+                    } else {
+                        System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
+                    }
+                } else {
+                        // for ../ and ./ cd support;
+                        Path path = Paths.get(currpath);
+                        int pathCount = path.getNameCount();
+                        String changes = input.replace("cd ", "");
+                        StringBuilder newPath = new StringBuilder(changes);
+                        boolean fileavailable = true;
+                        while(newPath.charAt(0) == '.'){
+                            if(pathCount == 0) {
+                                fileavailable = false;
+                                break;
+                            }
+                            path = path.getParent();
+                            newPath = newPath.delete(0,3);
+                            pathCount--;
+                        }
+                        if(fileavailable){
+                            File file = new File(path.toString() + "/" + newPath.toString());
+                            if(file.exists()){
+                                currpath = file.getAbsolutePath();
+                            } else {
+                                fileavailable = false;
+                            }
+                        }
+                        if(!fileavailable){
+                            System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
 
-                }
-            } else
+                        }
+                    }
+                } else
             if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
             }
