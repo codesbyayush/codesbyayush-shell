@@ -36,6 +36,8 @@ public class Main {
                     } else {
                         System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
                     }
+                } else if (input.charAt(3) == '~') {
+                    currpath = System.getProperty("user.home");
                 } else if(input.charAt(4) == '/' ) {
                     String absolutePath;
                    if(currpath.charAt(currpath.length() - 1) == '/')
