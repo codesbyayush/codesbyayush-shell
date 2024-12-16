@@ -33,7 +33,7 @@ public class Main {
                     if(file.exists()){
                         currpath = file.getAbsolutePath();
                     } else {
-                        System.out.println(input+ ": No such file or directory");
+                        System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
                     }
                 } else {
                     // for ../ and ./ cd support;
