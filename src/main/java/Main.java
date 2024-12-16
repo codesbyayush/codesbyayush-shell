@@ -10,6 +10,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         boolean flag = true;
 
+        String currpath = System.getProperty("user.dir");
+
+
         String[] paths = System.getenv("PATH").split(File.pathSeparator);
         while(flag){
             System.out.print("$ ");
@@ -23,8 +26,21 @@ public class Main {
             } else if(input.contains("echo")) {
                 System.out.println(input.replace("echo ", ""));
             } else if(input.contains("pwd")) {
-                String path = System.getProperty("user.dir");
-                System.out.println(path);
+                System.out.println(currpath);
+            } else if(input.contains("cd")) {
+                if(input.charAt(3) == '/'){
+                    currpath = input.replace("cd ", "");
+                } else {
+                    // for ../ and ./ cd support;
+                    String[] pathArr = currpath.split("/");
+                    String[] newPathArr = input.replace("cd ", "").split("../");
+                    String newPath;
+                    int currIndex = pathArr.length;
+                    if(newPathArr.length > 1){
+                        currIndex = currIndex - newPathArr.length - 1;
+                    }
+
+                }
             } else
             if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
