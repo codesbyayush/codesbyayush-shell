@@ -5,6 +5,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.regex.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -26,7 +27,11 @@ public class Main {
             if (input.contains("exit")){
                 flag = false;
             } else if(input.contains("echo")) {
+                if(input.contains("'")){
+                    System.out.println(input.replace("echo '", "").replace("'", ""));
+                } else {
                 System.out.println(input.replace("echo ", ""));
+                }
             } else if(input.contains("pwd")) {
                 System.out.println(currpath);
             } else if(input.contains("cd")) {
@@ -82,6 +87,35 @@ public class Main {
 
                         }
                     }
+                }else if (input.contains("cat")) {
+                    String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(input);
+                    String content = "";
+                    int filenum = 0;
+                    while (matcher.find()) {
+                        String match = matcher.group();
+                        File file = new File(match.replaceAll("'", ""));
+                        if (file.exists()) {
+                            Scanner sc = new Scanner(file);
+                            int line = 0;
+                            if(filenum > 0) {
+                                content += " ";
+                            }
+                            while (sc.hasNextLine()) {
+                                if(line > 0) {
+                                    content += "\n";
+                                }
+                                content += sc.nextLine();
+                                line++;
+                            }
+                            sc.close();
+                        } else {
+                            System.out.println(match.replaceAll("'", "") + ": No such file or directory");
+                        }
+                        filenum++;
+                    }
+                    System.out.println(content);
                 } else
             if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
