@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.util.*;
 import java.io.File;
 import java.lang.ProcessBuilder;
 import java.io.BufferedReader;
@@ -17,9 +17,12 @@ public class Main {
 
         String[] paths = System.getenv("PATH").split(File.pathSeparator);
         String HOMEDIR = System.getenv("HOME");
+
+
         while(flag){
             System.out.print("$ ");
             String input = scanner.nextLine();
+            List<String> list = breakInput(input);
 
             if(input.contains("type")) {
                 handleCommandType(input, paths);
@@ -27,11 +30,18 @@ public class Main {
             if (input.contains("exit")){
                 flag = false;
             } else if(input.contains("echo")) {
-                if(input.contains("'")){
-                    System.out.println(input.replace("echo '", "").replace("'", ""));
-                } else {
-                System.out.println(input.replace("echo ", ""));
+                // if(input.contains("'")){
+                //     System.out.println(input.replace("echo '", "").replace("'", ""));
+                // } else {
+                //     System.out.println(input.replace("echo ", ""));
+                // }
+                for(int i=1; i<list.size(); i++){
+                    if(i > 1) {
+                        System.out.print(" ");
+                    }
+                    System.out.print(list.get(i));
                 }
+                System.out.println();
             } else if(input.contains("pwd")) {
                 System.out.println(currpath);
             } else if(input.contains("cd")) {
@@ -171,5 +181,34 @@ public class Main {
                 if(!found)
                 System.out.println( command + ": not found");
         }
+    }
+
+    static List<String> breakInput(String input){
+        List<String> list = new ArrayList<>();
+        int st = 0;
+
+        String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(input);
+
+        while(st < input.length()){
+            int stInd = input.indexOf("\\S", st);
+            if(input.charAt(stInd) == '\''){
+                String currr = matcher.group();
+                st = stInd + currr.length();
+                list.add(currr);
+                continue;
+            }
+            int nextInd = input.indexOf(" ", stInd);
+            int lstInd = nextInd;
+            if(nextInd == -1) {
+                list.add(input.substring(stInd));
+                break;
+            }
+            list.add(input.substring(stInd, lstInd));
+            st = lstInd;
+
+        }
+        return list;
     }
 }
