@@ -102,16 +102,12 @@ public class Main {
                     Pattern pattern = Pattern.compile(regex);
                     Matcher matcher = pattern.matcher(input);
                     String content = "";
-                    int filenum = 0;
                     while (matcher.find()) {
                         String match = matcher.group();
                         File file = new File(match.replaceAll("'", ""));
                         if (file.exists()) {
                             Scanner sc = new Scanner(file);
                             int line = 0;
-                            if(filenum > 0) {
-                                content += " ";
-                            }
                             while (sc.hasNextLine()) {
                                 if(line > 0) {
                                     content += "\n";
@@ -123,7 +119,6 @@ public class Main {
                         } else {
                             System.out.println(match.replaceAll("'", "") + ": No such file or directory");
                         }
-                        filenum++;
                     }
                     System.out.println(content);
                 } else
