@@ -51,6 +51,7 @@ public class Main {
                         currpath = file.getAbsolutePath();
                     } else {
                         System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
+                        continue;
                     }
                 } else if (input.charAt(3) == '~') {
                     currpath = HOMEDIR;
@@ -67,6 +68,7 @@ public class Main {
                         currpath = file.getAbsolutePath();
                     } else {
                         System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
+                        continue;
                     }
                 } else {
                         // for ../ and ./ cd support;
@@ -94,9 +96,10 @@ public class Main {
                         }
                         if(!fileavailable){
                             System.out.println("cd: " + input.replace("cd ", "") + ": No such file or directory");
-
+                            continue;
                         }
                     }
+                    System.out.println("");
                 }else if (input.contains("cat")) {
                     String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
                     Pattern pattern = Pattern.compile(regex);
