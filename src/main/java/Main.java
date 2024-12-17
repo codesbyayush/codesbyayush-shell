@@ -191,7 +191,6 @@ public class Main {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(input);
 
-        Patter nonWhite = Pattern.compile("\\S");
 
         while(st < input.length()){
             int stInd = st;
