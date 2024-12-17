@@ -26,15 +26,9 @@ public class Main {
 
             if(input.contains("type")) {
                 handleCommandType(input, paths);
-            } else
-            if (input.contains("exit")){
+            } else if (input.contains("exit")){
                 flag = false;
             } else if(input.contains("echo")) {
-                // if(input.contains("'")){
-                //     System.out.println(input.replace("echo '", "").replace("'", ""));
-                // } else {
-                //     System.out.println(input.replace("echo ", ""));
-                // }
                 for(int i=1; i<list.size(); i++){
                     if(i > 1) {
                         System.out.print(" ");
