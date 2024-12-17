@@ -4,8 +4,8 @@ import java.lang.ProcessBuilder;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
-import java.nio.file.*;
-import java.util.regex.*;
+    import java.nio.file.*;
+    import java.util.regex.*;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -196,20 +196,26 @@ public class Main {
             int stInd = st;
             while(stInd < input.length() && input.charAt(stInd) == ' ') stInd++;
             if(stInd == input.length()) return list;
-            if(input.charAt(stInd) == '\''){
-                String currr = matcher.group();
-                st = stInd + currr.length();
-                list.add(currr);
+            int lstInd = stInd + 1;
+            if(input.charAt(stInd) == 39){
+                while(true){
+                    int curind = input.indexOf("'", lstInd);
+                    lstInd = curind + 1;
+                    if(input.charAt(curind - 1) != '\\') {
+                        list.add(input.substring(stInd+1, curind));
+                        break;
+                    }
+                }
+                st = lstInd;
                 continue;
             }
             int nextInd = input.indexOf(" ", stInd);
-            int lstInd = nextInd;
             if(nextInd == -1) {
                 list.add(input.substring(stInd));
                 break;
             }
-            list.add(input.substring(stInd, lstInd));
-            st = lstInd;
+            list.add(input.substring(stInd, nextInd));
+            st = nextInd;
 
         }
         return list;
