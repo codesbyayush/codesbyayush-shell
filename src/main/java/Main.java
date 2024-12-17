@@ -99,7 +99,6 @@ public class Main {
                             continue;
                         }
                     }
-                    System.out.println();
                 }else if (input.contains("cat")) {
                     String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
                     Pattern pattern = Pattern.compile(regex);
