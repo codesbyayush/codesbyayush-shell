@@ -93,32 +93,50 @@ public class Main {
                             continue;
                         }
                     }
-                }else if (input.contains("cat")) {
-                    String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
-                    Pattern pattern = Pattern.compile(regex);
-                    Matcher matcher = pattern.matcher(input);
-                    String content = "";
-                    while (matcher.find()) {
-                        String match = matcher.group();
-                        File file = new File(match.replaceAll("'", ""));
-                        if (file.exists()) {
-                            Scanner sc = new Scanner(file);
-                            int line = 0;
-                            while (sc.hasNextLine()) {
-                                if(line > 0) {
-                                    content += "\n";
-                                }
-                                content += sc.nextLine();
-                                line++;
+            } else if (input.contains("cat")) {
+                String content = "";
+                for(int i = 1; i< list.size(); i++){
+                    String filelocation = list.get(i);
+                    File file = new File(filelocation);
+                    if (file.exists()) {
+                        Scanner sc = new Scanner(file);
+                        int line = 0;
+                        while (sc.hasNextLine()) {
+                            if(line > 0) {
+                                content += "\n";
                             }
-                            sc.close();
-                        } else {
-                            System.out.println(match.replaceAll("'", "") + ": No such file or directory");
+                            content += sc.nextLine();
+                            line++;
                         }
+                        sc.close();
+                    } else {
+                        System.out.println("\"" + filelocation + ": No such file or directory");
                     }
-                    System.out.println(content);
-                } else
-            if(invalidCommand(input, paths)){
+                }
+                // String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
+                // Pattern pattern = Pattern.compile(regex);
+                // Matcher matcher = pattern.matcher(input);
+                // String content = "";
+                // while (matcher.find()) {
+                //     String match = matcher.group();
+                //     File file = new File(match.replaceAll("'", ""));
+                //     if (file.exists()) {
+                //         Scanner sc = new Scanner(file);
+                //         int line = 0;
+                //         while (sc.hasNextLine()) {
+                //             if(line > 0) {
+                //                 content += "\n";
+                //             }
+                //             content += sc.nextLine();
+                //             line++;
+                //         }
+                //         sc.close();
+                //     } else {
+                //         System.out.println(match.replaceAll("'", "") + ": No such file or directory");
+                //     }
+                // }
+                System.out.println(content);
+            } else if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
             }
         }
@@ -177,26 +195,12 @@ public class Main {
     static List<String> breakInput(String input){
         List<String> list = new ArrayList<>();
         int st = 0;
-
-        String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
-
-
         while(st < input.length()){
             int stInd = st;
             while(stInd < input.length() && input.charAt(stInd) == ' ') stInd++;
             if(stInd == input.length()) return list;
             int lstInd = stInd + 1;
             if(input.charAt(stInd) == 39){
-                // while(true){
-                //     int curind = input.indexOf("'", lstInd);
-                //     lstInd = curind + 1;
-                //     if(input.charAt(curind - 1) != '\\') {
-                //         list.add(input.substring(stInd+1, curind));
-                //         break;
-                //     }
-                // }
                 int lastInd = closingQuote(input, false, stInd);
                 list.add(input.substring(stInd+1, lastInd));
                 st = lastInd + 1;
