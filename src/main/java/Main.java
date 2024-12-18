@@ -232,6 +232,5 @@ public class Main {
             }
             if(lastInd >= input.length()) return input.length();
         }
-        return input.length();
     }
 }
