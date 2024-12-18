@@ -175,8 +175,8 @@ public class Main {
     }
 
     static List<String> breakInput(String input){
-        int st = 0;
         List<String> list = new ArrayList<>();
+        int st = 0;
 
         String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
         Pattern pattern = Pattern.compile(regex);
@@ -189,15 +189,22 @@ public class Main {
             if(stInd == input.length()) return list;
             int lstInd = stInd + 1;
             if(input.charAt(stInd) == 39){
-                while(true){
-                    int curind = input.indexOf("'", lstInd);
-                    lstInd = curind + 1;
-                    if(input.charAt(curind - 1) != '\\') {
-                        list.add(input.substring(stInd+1, curind));
-                        break;
-                    }
-                }
-                st = lstInd;
+                // while(true){
+                //     int curind = input.indexOf("'", lstInd);
+                //     lstInd = curind + 1;
+                //     if(input.charAt(curind - 1) != '\\') {
+                //         list.add(input.substring(stInd+1, curind));
+                //         break;
+                //     }
+                // }
+                int lastInd = closingQuote(input, false, stInd);
+                list.add(input.substring(stInd+1, lastInd));
+                st = lastInd + 1;
+                continue;
+            } else if(input.charAt(stInd) == 34){
+                int lastInd = closingQuote(input, true, stInd);
+                list.add(input.substring(stInd+1, lastInd));
+                st = lastInd + 1;
                 continue;
             }
             int nextInd = input.indexOf(" ", stInd);
@@ -210,5 +217,21 @@ public class Main {
 
         }
         return list;
+    }
+    static int closingQuote(String input, boolean doubleQuote, int start) {
+        int lastInd = start + 1;
+        String toFind = "\"";
+        if(!doubleQuote){
+            toFind = "'";
+        }
+        while(true){
+            int curind = input.indexOf(toFind, lastInd);
+            lastInd = curind + 1;
+            if(input.charAt(curind - 1) != '\\') {
+                return curind;
+            }
+            if(lastInd >= input.length()) return input.length();
+        }
+        return input.length();
     }
 }
