@@ -196,7 +196,12 @@ public class Main {
                         st = input.length();
                         break;
                     } else if(input.charAt(nextInd-1) == 92){
-                        list.add(input.substring(stInd, nextInd+1).replace("\\", ""));
+                        String curr = input.substring(stInd, nextInd+1).replace("\\", "");
+                        if(curr.length() == 1){
+                            list.add("");
+                        } else {
+                            list.add(curr);
+                        }
                     } else {
                         list.add(input.substring(stInd, nextInd));
                     }
