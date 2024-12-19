@@ -195,13 +195,14 @@ public class Main {
                         list.add(input.substring(stInd));
                         st = input.length();
                         break;
+                    } else if(input.charAt(nextInd-1) == 92){
+                        list.add(input.substring(stInd, nextInd+1).replace("\\", ""));
+                    } else {
+                        list.add(input.substring(stInd, nextInd));
                     }
-                    // } else if(input.charAt(nextInd-1) == 92){
-                        list.add(input.substring(stInd, nextInd+1).replace("\ ", ""));
-                    // }
 
                     st = nextInd;
-                }
+                // }
             }
 
         }
