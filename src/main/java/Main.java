@@ -201,6 +201,7 @@ public class Main {
                             list.add("");
                         } else {
                             list.add(curr);
+
                         }
                     } else {
                         list.add(input.substring(stInd, nextInd));
