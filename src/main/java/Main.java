@@ -113,28 +113,6 @@ public class Main {
                         System.out.println("\"" + filelocation + ": No such file or directory");
                     }
                 }
-                // String regex = "(['\"])(?:(?!\\1)[^\\\\]|\\\\.)*\\1";
-                // Pattern pattern = Pattern.compile(regex);
-                // Matcher matcher = pattern.matcher(input);
-                // String content = "";
-                // while (matcher.find()) {
-                //     String match = matcher.group();
-                //     File file = new File(match.replaceAll("'", ""));
-                //     if (file.exists()) {
-                //         Scanner sc = new Scanner(file);
-                //         int line = 0;
-                //         while (sc.hasNextLine()) {
-                //             if(line > 0) {
-                //                 content += "\n";
-                //             }
-                //             content += sc.nextLine();
-                //             line++;
-                //         }
-                //         sc.close();
-                //     } else {
-                //         System.out.println(match.replaceAll("'", "") + ": No such file or directory");
-                //     }
-                // }
                 System.out.println(content);
             } else if(invalidCommand(input, paths)){
                 System.out.println(input + ": command not found");
