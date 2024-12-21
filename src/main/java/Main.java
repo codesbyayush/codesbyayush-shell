@@ -192,17 +192,16 @@ public class Main {
                 int nextInd;
                 while(true){
                     nextInd = input.indexOf(" ", stInd);
-                    // if(nextInd == -1) {
-                    //     list.add(input.substring(stInd));
-                    //     st = input.length();
-                    //     break;
-                    // } else
+                    if(nextInd == -1) {
+                        list.add(input.substring(stInd));
+                        st = input.length();
+                        break;
+                    } else
                     if(nextInd == -1 || input.charAt(nextInd-1) != 92){
                         break;
+                    } else {
+                        list.add(input.substring(stInd, nextInd));
                     }
-                    // else {
-                    //     list.add(input.substring(stInd, nextInd));
-                    // }
 
                     st = nextInd;
                 }
