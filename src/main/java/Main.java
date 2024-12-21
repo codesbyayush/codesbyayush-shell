@@ -189,26 +189,25 @@ public class Main {
                 st = lastInd + 1;
                 continue;
             } else {
-                // while(true){
-                    int nextInd = input.indexOf(" ", stInd);
-                    if(nextInd == -1) {
-                        list.add(input.substring(stInd));
-                        st = input.length();
+                int nextInd;
+                while(true){
+                    nextInd = input.indexOf(" ", stInd);
+                    // if(nextInd == -1) {
+                    //     list.add(input.substring(stInd));
+                    //     st = input.length();
+                    //     break;
+                    // } else
+                    if(nextInd == -1 || input.charAt(nextInd-1) != 92){
                         break;
-                    } else if(input.charAt(nextInd-1) == 92){
-                        String curr = input.substring(stInd, nextInd+1).replace("\\ ", "");
-                        if(curr.length() == 1){
-                            list.add("");
-                        } else {
-                            list.add(curr);
-
-                        }
-                    } else {
-                        list.add(input.substring(stInd, nextInd));
                     }
+                    // else {
+                    //     list.add(input.substring(stInd, nextInd));
+                    // }
 
                     st = nextInd;
-                // }
+                }
+                if(nextInd)
+
             }
 
         }
