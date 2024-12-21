@@ -210,11 +210,11 @@ public class Main {
                     }
                 }
                 if(nextInd == -1){
-                    list.add(input.substring(st).replaceAll("\\", ""));
+                    list.add(input.substring(st).replace("\\", ""));
                     st = input.length();
                 }
                 else {
-                    list.add(input.substring(st, nextInd).replaceAll("\\", ""));
+                    list.add(input.substring(st, nextInd).replace("\\", ""));
                 }
 
             }
