@@ -205,7 +205,7 @@ public class Main {
 
                     st = nextInd;
                 }
-                if(nextInd)
+                // if(nextInd)
 
             }
 
