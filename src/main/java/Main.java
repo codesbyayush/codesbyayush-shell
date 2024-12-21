@@ -190,22 +190,32 @@ public class Main {
                 continue;
             } else {
                 int nextInd;
+                st = stInd;
                 while(true){
-                    nextInd = input.indexOf(" ", stInd);
-                    if(nextInd == -1) {
-                        list.add(input.substring(stInd));
-                        st = input.length();
+                    if(stInd >= input.length()){
+                        nextInd = -1;
                         break;
-                    } else
+                    }
+                    nextInd = input.indexOf(" ", stInd);
+                    // if(nextInd == -1) {
+                    //     list.add(input.substring(stInd));
+                    //     st = input.length();
+                    //     break;
+                    // } else
                     if(nextInd == -1 || input.charAt(nextInd-1) != 92){
                         break;
                     } else {
-                        list.add(input.substring(stInd, nextInd));
+                        stInd = nextInd + 1;
+                        continue;
                     }
-
-                    st = nextInd;
                 }
-                // if(nextInd)
+                if(nextInd == -1){
+                    list.add(input.substring(st).replaceAll("\\", ""));
+                    st = input.length();
+                }
+                else {
+                    list.add(input.substring(st, nextInd).replaceAll("\\", ""));
+                }
 
             }
 
