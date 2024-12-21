@@ -185,7 +185,7 @@ public class Main {
                 continue;
             } else if(input.charAt(stInd) == 34){
                 int lastInd = closingQuote(input, true, stInd);
-                list.add(input.substring(stInd+1, lastInd));
+                list.add(backslashInDoubleQuotes(input.substring(stInd+1, lastInd)));
                 st = lastInd + 1;
                 continue;
             } else {
@@ -217,6 +217,32 @@ public class Main {
 
         }
         return list;
+    }
+
+    static String backslashInDoubleQuotes(String s){
+        StringBuilder sb = new StringBuilder("");
+        char last = ' ';
+        for(char c: s.toCharArray()){
+            if(last != 92 && c != 92){
+                sb.append(c);
+            } else if(last == 92 ){
+                if(c == 92) {
+                    sb.append("\\");
+                } else if( c== '$'){
+                    sb.append("$");
+                } else if( c == '"'){
+                    sb.append("\"");
+                } else if(c == 'n'){
+                    sb.append("n");
+                } else {
+                    sb.append("\\" + c);
+                }
+                last = ' ';
+            } else {
+                last = '\\';
+            }
+        }
+        return sb.toString();
     }
     static int closingQuote(String input, boolean doubleQuote, int start) {
         int lastInd = start + 1;
