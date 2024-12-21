@@ -197,11 +197,6 @@ public class Main {
                         break;
                     }
                     nextInd = input.indexOf(" ", stInd);
-                    // if(nextInd == -1) {
-                    //     list.add(input.substring(stInd));
-                    //     st = input.length();
-                    //     break;
-                    // } else
                     if(nextInd == -1 || input.charAt(nextInd-1) != 92){
                         break;
                     } else {
@@ -215,6 +210,7 @@ public class Main {
                 }
                 else {
                     list.add(input.substring(st, nextInd).replace("\\", ""));
+                    st = nextInd;
                 }
 
             }
